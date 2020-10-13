@@ -47,6 +47,27 @@ def isDivert2Open():
     point = pyautogui.pixel(515, 525)
     return point[0] == 161 and point[1] == 129 and point[2] == 24
 
+def isAlignEngineOpen():
+    point1 = pyautogui.pixel(515, 525)
+
+def isAdminCardOpen():
+    point = pyautogui.pixel(847, 834)
+    return point[0] == 189 and point[1] == 211 and point[2] == 181
+
+def isDownloadOpen():
+    point = pyautogui.pixel(700, 480)
+    point2 = pyautogui.pixel(1200, 480)
+    return point[0] == 241 and point[1] == 212 and point[2] == 161 and \
+    point2[0] == 241 and point2[1] == 212 and point2[2] == 161
+
+def isStabilization():
+    point = pyautogui.pixel(920, 580)
+    return point[0] == 54 and point[1] == 152 and point[2] == 218
+
+def isfuelOpen():
+    point = pyautogui.pixel(1305, 840)
+    return point[0] == 173 and point[1] == 46 and point[2] == 0
+
 def doElectric():
     leftCables = [Point(568, 273), Point(568, 461), Point(568, 646), Point(568, 830)]
 
@@ -81,9 +102,37 @@ def doDivert():
 def doDivert2():
     pyautogui.click(x=960, y=540)
 
+def doAdminCard():
+    pyautogui.click(x=847, y=834)
+    time.sleep(1)
+    pyautogui.moveTo(520, 420)
+    pyautogui.dragTo(1500, 420, 0.6, button='left')
+    time.sleep(0.1)
+    red = pyautogui.pixel(1270, 320)
+    if red[0] == 255 and red[1] == 0 and red[2] == 0:
+        doAdminCard()
+    
+    # wait a few seconds, because card will go back down and it would do the task again
+    time.sleep(3)    
+
+def doDownload():
+    pyautogui.click(x=950, y=660)
+    time.sleep(10)
+
+def doStabilization():
+    pyautogui.click(x=960, y=540)
+    time.sleep(2)
+
+def doFuel():
+    pyautogui.moveTo(1450, 888)
+    pyautogui.mouseDown()
+    time.sleep(3.5)
+    pyautogui.mouseUp()
+    time.sleep(1)
+
 # repeatedly check if a game is open
 while keyboard.is_pressed('q') == False:
-    
+    pass
     if isElectricOpen():
         doElectric()
 
@@ -93,4 +142,14 @@ while keyboard.is_pressed('q') == False:
     if isDivert2Open():
         doDivert2()
     
+    if isAdminCardOpen():
+        doAdminCard()
+        
+    if isDownloadOpen():
+        doDownload()
 
+    if isStabilization():
+        doStabilization()
+
+    if isfuelOpen():
+        doFuel()
