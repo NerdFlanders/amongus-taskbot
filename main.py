@@ -68,6 +68,14 @@ def isfuelOpen():
     point = pyautogui.pixel(1305, 840)
     return point[0] == 173 and point[1] == 46 and point[2] == 0
 
+def isSieldsOpen():
+    point = pyautogui.pixel(825, 150)
+    point2 = pyautogui.pixel(880, 940)
+    t = point[0] == 30 and point[1] == 73 and point[2] == 145 and \
+        point2[0] == 30 and point2[1] == 73 and point2[2] == 145
+    print(t)
+    return t
+
 def doElectric():
     leftCables = [Point(568, 273), Point(568, 461), Point(568, 646), Point(568, 830)]
 
@@ -130,9 +138,23 @@ def doFuel():
     pyautogui.mouseUp()
     time.sleep(1)
 
+def doShields():
+    shields = [Point(830, 390), Point(960, 390), Point(1140, 390), Point(950, 530), Point(790, 750), Point(930, 750), Point(1170, 750)]
+
+    # check all shields and click if its red
+    for shield in shields:
+        print(shield.x, shield.y)
+        if pyautogui.pixel(shield.x, shield.y)[0] == 202 and \
+            pyautogui.pixel(shield.x, shield.y)[1] > 81 and pyautogui.pixel(shield.x, shield.y)[1] < 107 and \
+            pyautogui.pixel(shield.x, shield.y)[2] > 99 and pyautogui.pixel(shield.x, shield.y)[2] < 125:
+           pyautogui.click(shield.x, shield.y)
+    print('done doing shields')
+
+def close():
+    pass
+
 # repeatedly check if a game is open
 while keyboard.is_pressed('q') == False:
-    pass
     if isElectricOpen():
         doElectric()
 
@@ -153,3 +175,6 @@ while keyboard.is_pressed('q') == False:
 
     if isfuelOpen():
         doFuel()
+
+    if isSieldsOpen():
+        doShields()
